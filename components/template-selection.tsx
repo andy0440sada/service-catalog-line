@@ -51,8 +51,8 @@ export function TemplateSelection() {
                 </p>
                 <div className="w-full max-w-[300px] h-[150px] relative rounded-lg overflow-hidden border border-gray-200 shadow-sm">
                   <Image
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202025-05-08%2011.03.38-MAAd6wGISHYhZiTMstRHQDuDnvrWi4.png"
-                    alt="会員証LINEミニアプリ"
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Gemini_Generated_Image_grddb1grddb1grdd-H6LlrZxOSYjhCqfyVCTtA23ZpN94Cq.jpeg"
+                    alt="LINEミニアプリ会員カードのデモ画面"
                     fill
                     className="object-cover"
                   />
