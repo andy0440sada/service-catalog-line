@@ -43,10 +43,10 @@ export function HeroSection() {
           <div className="flex items-center justify-center">
             <div className="relative w-full h-[400px] rounded-lg overflow-hidden shadow-xl border border-gray-200">
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src="/images/hero-image.png"
                 width={600}
                 height={400}
-                alt="LINEミニアプリの活用イメージ"
+                alt="LINEミニアプリでポイントを獲得する女性"
                 className="object-cover"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
