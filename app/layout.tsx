@@ -23,12 +23,7 @@ export default function RootLayout({
         <AuthProvider>
           {" "}
           {/* AuthProvider should wrap ThemeProvider and children */}
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light" // Changed from "system" to "light" as per original user code
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
             {children}
           </ThemeProvider>
         </AuthProvider>
