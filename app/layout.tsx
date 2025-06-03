@@ -2,7 +2,7 @@ import type React from "react"
 import "@/app/globals.css"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
-import { AuthProvider } from "@/lib/auth" // Ensure AuthProvider is imported
+import { AuthProvider } from "@/lib/auth" // AuthProviderがインポートされていることを確認
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           {" "}
-          {/* AuthProvider should wrap ThemeProvider and children */}
+          {/* AuthProvider は ThemeProvider と children をラップする必要があります */}
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
             {children}
           </ThemeProvider>
