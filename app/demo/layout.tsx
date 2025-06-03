@@ -7,7 +7,12 @@ export default function DemoLayout({
   children: React.ReactNode
 }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="light"
+      enableSystem={true}
+      disableTransitionOnChange={true} // 以前の省略形 disableTransitionOnChange と同義
+    >
       {children}
     </ThemeProvider>
   )

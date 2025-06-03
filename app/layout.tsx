@@ -23,7 +23,12 @@ export default function RootLayout({
         <AuthProvider>
           {" "}
           {/* AuthProvider は ThemeProvider と children をラップする必要があります */}
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem={true}
+            disableTransitionOnChange={true} // 以前の省略形 disableTransitionOnChange と同義
+          >
             {children}
           </ThemeProvider>
         </AuthProvider>
