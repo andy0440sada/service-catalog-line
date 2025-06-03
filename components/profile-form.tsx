@@ -14,11 +14,11 @@ const profileFormSchemaBase = {
   jobTitle: z.string().min(1, { message: "役職を入力してください。" }),
   industry: z.string().min(1, { message: "業種を入力してください。" }),
   email: z.string().email({ message: "有効なメールアドレスを入力してください。" }),
-  password: z.string().min(8, { message: "パスワードは8文字以上で入力してください。" }).optional(), // Optional by default, required dynamically
-  confirmPassword: z.string().optional(), // Optional by default, required dynamically
+  password: z.string().min(8, { message: "パスワードは8文字以上で入力してください。" }).optional(), // デフォルトではオプショナル、動的に必須
+  confirmPassword: z.string().optional(), // デフォルトではオプショナル、動的に必須
 }
 
-// Schema for full registration including password
+// パスワードを含む完全な登録スキーマ
 const fullRegistrationSchema = z
   .object({
     ...profileFormSchemaBase,
@@ -27,19 +27,19 @@ const fullRegistrationSchema = z
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "パスワードが一致しません。",
-    path: ["confirmPassword"], // Point error to confirmPassword field
+    path: ["confirmPassword"], // エラーをconfirmPasswordフィールドに表示
   })
 
-// Schema for profile update (password not necessarily required)
+// プロフィール更新用スキーマ（パスワードは必ずしも必須ではない）
 const profileUpdateSchema = z.object({
   name: profileFormSchemaBase.name.optional(),
   jobTitle: profileFormSchemaBase.jobTitle.optional(),
   industry: profileFormSchemaBase.industry.optional(),
   email: profileFormSchemaBase.email.optional(),
-  // Password fields are not part of the base update schema unless explicitly required
+  // パスワードフィールドは、明示的に必須とされない限り、基本更新スキーマの一部ではない
 })
 
-type ProfileFormValues = z.infer<typeof fullRegistrationSchema> // Use the most inclusive type
+type ProfileFormValues = z.infer<typeof fullRegistrationSchema> // 最も包括的な型を使用
 
 interface ProfileFormProps {
   onSuccess?: () => void
@@ -48,9 +48,9 @@ interface ProfileFormProps {
     jobTitle?: boolean
     industry?: boolean
     email?: boolean
-    password?: boolean // To indicate if password section should be shown and required
+    password?: boolean // パスワードセクションを表示し、必須とするかどうかを示す
   }
-  isInitialRegistration?: boolean // Flag to differentiate between initial reg and update
+  isInitialRegistration?: boolean // 初期登録と更新を区別するためのフラグ
 }
 
 export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration = false }: ProfileFormProps) {
@@ -58,8 +58,7 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Determine the schema based on whether it's initial registration or just an update
-  // And if password fields are explicitly required
+  // 初期登録か、単なる更新か、そしてパスワードフィールドが明示的に必須かどうかに基づいてスキーマを決定
   const activeSchema = isInitialRegistration || requiredFields?.password ? fullRegistrationSchema : profileUpdateSchema
 
   const form = useForm<ProfileFormValues>({
@@ -80,7 +79,7 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
     setError(null)
     console.log("Form submitted with data:", data)
 
-    // Simulate API call
+    // API呼び出しをシミュレート
     await new Promise((resolve) => setTimeout(resolve, 1000))
     try {
       const profileUpdates: Partial<UserProfile> = {
@@ -90,14 +89,14 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
       }
       if (data.email && data.email !== user?.email) {
         profileUpdates.email = data.email
-        // In a real app, you might need to re-authenticate or verify new email
+        // 実際のアプリでは、新しいメールアドレスの再認証または確認が必要になる場合がある
         console.log("Email change requested to:", data.email)
       }
 
       if (isInitialRegistration || requiredFields?.password) {
         console.log("Password received (not stored in mock):", data.password)
-        // In a real app, handle password change/creation securely here
-        // e.g., call an API endpoint to register user or update password
+        // 実際のアプリでは、ここでパスワードの変更/作成を安全に処理する
+        // 例：ユーザー登録またはパスワード更新のためのAPIエンドポイントを呼び出す
       }
 
       updateUserProfileState(profileUpdates)
@@ -134,8 +133,12 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
                 <FormControl>
                   <Input
                     placeholder="your@email.com"
-                    {...field}
-                    readOnly={!!user?.email && !isInitialRegistration} // Allow edit for initial registration
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    name={field.name}
+                    ref={field.ref}
+                    readOnly={!!user?.email && !isInitialRegistration} // 初期登録の場合は編集可能
                   />
                 </FormControl>
                 {isInitialRegistration && <FormDescription>ログインに使用します。</FormDescription>}
@@ -156,7 +159,15 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
                     パスワード <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="8文字以上" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="8文字以上"
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      ref={field.ref}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -171,7 +182,15 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
                     パスワード（確認用） <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="パスワードを再入力" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="パスワードを再入力"
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      ref={field.ref}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -190,7 +209,14 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
                   お名前 <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="山田 太郎" {...field} />
+                  <Input
+                    placeholder="山田 太郎"
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    name={field.name}
+                    ref={field.ref}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -207,7 +233,14 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
                   役職 <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="例: マーケティング担当" {...field} />
+                  <Input
+                    placeholder="例: マーケティング担当"
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    name={field.name}
+                    ref={field.ref}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -224,7 +257,14 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
                   業種 <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="例: 小売業" {...field} />
+                  <Input
+                    placeholder="例: 小売業"
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    name={field.name}
+                    ref={field.ref}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
