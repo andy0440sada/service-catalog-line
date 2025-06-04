@@ -67,8 +67,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     loading,
     updateUserProfileState,
   }
-
-  // Ensure this return statement is formatted with parentheses and newlines
+  
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
 }
 
