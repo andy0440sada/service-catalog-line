@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input" // Ensure this imports the clean Input
 import { useAuth, type UserProfile } from "@/lib/auth"
 import { useState } from "react"
 
@@ -124,10 +124,9 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
                 </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="your@email.com"
                     type="email"
-                    {...field}
-                    value={field.value || ""}
+                    placeholder="your@email.com"
+                    {...field} // Spread field props (includes value, onChange, onBlur, name, ref)
                     readOnly={!!user?.email && !isInitialRegistration}
                   />
                 </FormControl>
@@ -149,7 +148,7 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
                     パスワード <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="8文字以上" {...field} value={field.value || ""} />
+                    <Input type="password" placeholder="8文字以上" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -164,7 +163,7 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
                     パスワード（確認用） <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="パスワードを再入力" {...field} value={field.value || ""} />
+                    <Input type="password" placeholder="パスワードを再入力" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -183,7 +182,7 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
                   お名前 <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="山田 太郎" {...field} value={field.value || ""} />
+                  <Input placeholder="山田 太郎" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -200,7 +199,7 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
                   役職 <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="例: マーケティング担当" {...field} value={field.value || ""} />
+                  <Input placeholder="例: マーケティング担当" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -217,7 +216,7 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
                   業種 <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="例: 小売業" {...field} value={field.value || ""} />
+                  <Input placeholder="例: 小売業" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
