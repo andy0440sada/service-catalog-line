@@ -5,9 +5,18 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input" // Ensure this imports the clean Input
-import { useAuth, type UserProfile } from "@/lib/auth"
+import { Input } from "@/components/ui/input"
+// import { useAuth, type UserProfile } from "@/lib/auth" // useAuth のインポートを削除
 import { useState } from "react"
+
+// UserProfileの簡易的な型をここで定義（本来はtypes/app.tsなどに移すのが望ましい）
+interface UserProfile {
+  uid: string
+  email?: string | null
+  name?: string | null
+  jobTitle?: string | null
+  industry?: string | null
+}
 
 const profileFormSchemaBase = {
   name: z.string().min(1, { message: "お名前を入力してください。" }),
@@ -51,19 +60,30 @@ interface ProfileFormProps {
 }
 
 export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration = false }: ProfileFormProps) {
-  const { user, updateUserProfileState } = useAuth()
+  // const { user, updateUserProfileState } = useAuth() // useAuth の使用を削除
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // 仮のユーザー情報（useAuthから取得できなくなったため）
+  const mockUser: UserProfile | null = isInitialRegistration
+    ? null
+    : {
+        uid: "mock-profile-user",
+        email: "mock@example.com",
+        name: "モック ユーザー",
+        jobTitle: "モック役職",
+        industry: "モック業種",
+      }
 
   const activeSchema = isInitialRegistration || requiredFields?.password ? fullRegistrationSchema : profileUpdateSchema
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(activeSchema),
     defaultValues: {
-      email: user?.email || "",
-      name: user?.name || "",
-      jobTitle: user?.jobTitle || "",
-      industry: user?.industry || "",
+      email: mockUser?.email || "", // 仮のユーザー情報を使用
+      name: mockUser?.name || "", // 仮のユーザー情報を使用
+      jobTitle: mockUser?.jobTitle || "", // 仮のユーザー情報を使用
+      industry: mockUser?.industry || "", // 仮のユーザー情報を使用
       password: "",
       confirmPassword: "",
     },
@@ -73,25 +93,13 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
   async function onSubmit(data: ProfileFormValues) {
     setIsLoading(true)
     setError(null)
-    console.log("Form submitted with data:", data)
+    console.log("Form submitted with data (auth removed):", data)
 
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call
     try {
-      const profileUpdates: Partial<UserProfile> = {
-        name: data.name,
-        jobTitle: data.jobTitle,
-        industry: data.industry,
-      }
-      if (data.email && data.email !== user?.email) {
-        profileUpdates.email = data.email
-        console.log("Email change requested to:", data.email)
-      }
-
-      if (isInitialRegistration || requiredFields?.password) {
-        console.log("Password received (not stored in mock):", data.password)
-      }
-
-      updateUserProfileState(profileUpdates)
+      // updateUserProfileState の呼び出しを削除
+      // ここで実際のAPI呼び出しなどを行う（現在は何もしない）
+      console.log("Profile data (mock update):", data)
 
       setIsLoading(false)
       if (onSuccess) {
@@ -126,8 +134,8 @@ export function ProfileForm({ onSuccess, requiredFields, isInitialRegistration =
                   <Input
                     type="email"
                     placeholder="your@email.com"
-                    {...field} // Spread field props (includes value, onChange, onBlur, name, ref)
-                    readOnly={!!user?.email && !isInitialRegistration}
+                    {...field}
+                    readOnly={!!mockUser?.email && !isInitialRegistration} // 仮のユーザー情報を使用
                   />
                 </FormControl>
                 {isInitialRegistration && <FormDescription>ログインに使用します。</FormDescription>}

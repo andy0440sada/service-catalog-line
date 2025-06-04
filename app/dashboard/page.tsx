@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useAuth } from "@/lib/auth"
+// import { useAuth } from "@/lib/auth" // useAuth のインポートを削除
 import { getConstructedApps, clearConstructedApps } from "@/lib/constructed-apps"
 import type { ConstructedApp } from "@/types/app"
 import { AppCard } from "@/components/app-card"
@@ -18,20 +18,24 @@ import {
   DialogClose,
 } from "@/components/ui/dialog"
 
-// This URL should ideally be managed in a config or passed down if it varies
 const PRODUCTION_QR_URL =
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-zqepYHsGA9KB3E1GuartfeNLUGU5Bs.png"
 
+// 仮のユーザー情報と認証状態
+const MOCK_USER_ID = "mock-user-id-for-dashboard"
+const MOCK_IS_AUTHENTICATED = true // ダッシュボード表示のためにtrueに設定
+
 export default function DashboardPage() {
-  const { user, isAuthenticated, loading: authLoading } = useAuth()
+  // const { user, isAuthenticated, loading: authLoading } = useAuth() // useAuth の使用を削除
   const [apps, setApps] = useState<ConstructedApp[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true) // 認証ローディングは不要になったため、通常のローディングのみ
   const [isQrModalOpen, setIsQrModalOpen] = useState(false)
   const [selectedAppForQr, setSelectedAppForQr] = useState<ConstructedApp | null>(null)
 
   const fetchApps = () => {
-    if (isAuthenticated && user) {
-      const userApps = getConstructedApps(user.uid)
+    if (MOCK_IS_AUTHENTICATED) {
+      // 仮の認証状態を使用
+      const userApps = getConstructedApps(MOCK_USER_ID) // 仮のユーザーIDを使用
       setApps(userApps.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()))
     } else {
       setApps([])
@@ -40,16 +44,15 @@ export default function DashboardPage() {
   }
 
   useEffect(() => {
-    if (!authLoading) {
-      fetchApps()
-    }
-  }, [user, isAuthenticated, authLoading])
+    // authLoading のチェックを削除
+    fetchApps()
+  }, []) // 依存配列から user, isAuthenticated, authLoading を削除
 
   const handleDeleteApp = (appId: string) => {
-    if (!user) return
-    const currentApps = getConstructedApps(user.uid)
+    // user のチェックを削除し、仮のユーザーIDを使用
+    const currentApps = getConstructedApps(MOCK_USER_ID)
     const updatedApps = currentApps.filter((app) => app.id !== appId)
-    localStorage.setItem(`constructed_apps_${user.uid}`, JSON.stringify(updatedApps))
+    localStorage.setItem(`constructed_apps_${MOCK_USER_ID}`, JSON.stringify(updatedApps))
     setApps(updatedApps.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()))
   }
 
@@ -59,13 +62,13 @@ export default function DashboardPage() {
   }
 
   const handleClearAllApps = () => {
-    if (user) {
-      clearConstructedApps(user.uid)
-      fetchApps()
-    }
+    // user のチェックを削除し、仮のユーザーIDを使用
+    clearConstructedApps(MOCK_USER_ID)
+    fetchApps()
   }
 
-  if (authLoading || isLoading) {
+  if (isLoading) {
+    // authLoading のチェックを削除
     return (
       <div className="container mx-auto px-4 py-12 md:py-16 text-center">
         <p className="text-lg text-gray-600">ダッシュボードを読み込み中...</p>
@@ -73,7 +76,8 @@ export default function DashboardPage() {
     )
   }
 
-  if (!isAuthenticated) {
+  if (!MOCK_IS_AUTHENTICATED) {
+    // 仮の認証状態を使用
     return (
       <div className="container mx-auto px-4 py-12 md:py-16 text-center">
         <h1 className="text-3xl font-bold mb-6">アクセスできません</h1>
@@ -163,7 +167,7 @@ export default function DashboardPage() {
             </DialogHeader>
             <div className="flex justify-center items-center p-4">
               <img
-                src={PRODUCTION_QR_URL || "/placeholder.svg"} // Using the hardcoded production URL for miniapps
+                src={PRODUCTION_QR_URL || "/placeholder.svg"}
                 alt={`${selectedAppForQr.displayName} QRコード`}
                 className="w-64 h-64 border rounded-md"
               />

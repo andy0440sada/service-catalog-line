@@ -5,13 +5,22 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button"
 import { CheckCircle, ArrowRight, LogIn, AlertTriangle } from "lucide-react"
 import Link from "next/link"
-import { useAuth } from "@/lib/auth"
+// import { useAuth } from "@/lib/auth" // useAuth のインポートを削除
 import { ProfileModal } from "@/components/profile-modal"
 import { addConstructedApp, getConstructedApps } from "@/lib/constructed-apps"
 
 interface SystemGenerationScreenProps {
   templateId: string
   isGuest?: boolean
+}
+
+// UserProfileの簡易的な型をここで定義
+interface UserProfile {
+  uid: string
+  email?: string | null
+  name?: string | null
+  jobTitle?: string | null
+  industry?: string | null
 }
 
 interface ProfileModalProps {
@@ -28,8 +37,24 @@ interface ProfileModalProps {
   isInitialRegistration?: boolean
 }
 
+// 仮のユーザー情報と認証状態
+const MOCK_USER_SGS: UserProfile | null = {
+  // SGS: SystemGenerationScreen
+  uid: "mock-user-sgs-123",
+  email: "sgs_user@example.com",
+  name: "SGSユーザー",
+  jobTitle: "SGS役職",
+  industry: "SGS業種",
+}
+const MOCK_IS_AUTHENTICATED_SGS = true // システム生成画面の動作確認のためtrueに設定
+const MOCK_AUTH_LOADING_SGS = false
+
 export function SystemGenerationScreen({ templateId, isGuest = false }: SystemGenerationScreenProps) {
-  const { user, isAuthenticated, loading: authLoading } = useAuth()
+  // const { user, isAuthenticated, loading: authLoading } = useAuth() // useAuth の使用を削除
+  const user = isGuest ? null : MOCK_USER_SGS
+  const isAuthenticated = isGuest ? false : MOCK_IS_AUTHENTICATED_SGS
+  const authLoading = MOCK_AUTH_LOADING_SGS
+
   const [progress, setProgress] = useState(0)
   const [isGenerating, setIsGenerating] = useState(true)
   const [isGenerated, setIsGenerated] = useState(false)
@@ -42,8 +67,6 @@ export function SystemGenerationScreen({ templateId, isGuest = false }: SystemGe
     requiredFields: { name: true, jobTitle: true, industry: true },
     isInitialRegistration: false,
   })
-
-  // Profile check should happen after auth is loaded and system is generated
   const [profileCheckedAndReady, setProfileCheckedAndReady] = useState(false)
 
   // テンプレートの名前を取得
@@ -148,12 +171,14 @@ export function SystemGenerationScreen({ templateId, isGuest = false }: SystemGe
 
   const handleProfileUpdated = () => {
     setShowProfileModal(false)
+    // ここでユーザー情報を再評価するか、状態を更新する必要があるかもしれません。
+    // 今回は useAuth がないので、単純にモーダルを閉じるだけにします。
   }
 
   const openProfileModalForRegistration = () => {
     setProfileModalConfig({
       requiredFields: { name: true, jobTitle: true, industry: true, email: true, password: true },
-      isInitialRegistration: true, // Indicate this is for full initial registration
+      isInitialRegistration: true,
     })
     setShowProfileModal(true)
   }
@@ -335,15 +360,16 @@ export function SystemGenerationScreen({ templateId, isGuest = false }: SystemGe
           </Card>
         </div>
       </div>
-      {showProfileModal && isAuthenticated && (
-        <ProfileModal
-          isOpen={showProfileModal}
-          onClose={() => setShowProfileModal(false)}
-          onSuccess={handleProfileUpdated}
-          requiredFields={profileModalConfig.requiredFields}
-          isInitialRegistration={profileModalConfig.isInitialRegistration}
-        />
-      )}
+      {showProfileModal &&
+        isAuthenticated && ( // isAuthenticated のチェックを追加
+          <ProfileModal
+            isOpen={showProfileModal}
+            onClose={() => setShowProfileModal(false)}
+            onSuccess={handleProfileUpdated}
+            requiredFields={profileModalConfig.requiredFields}
+            isInitialRegistration={profileModalConfig.isInitialRegistration}
+          />
+        )}
     </section>
   )
 }
