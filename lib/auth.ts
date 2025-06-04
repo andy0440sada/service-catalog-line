@@ -76,14 +76,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     })
   }
 
-  const value = {
+  const contextValue = {
     user,
     isAuthenticated: !!user && !loading,
     loading,
     updateUserProfileState,
   }
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
 }
 
 export const useAuth = (): AuthContextType => {
