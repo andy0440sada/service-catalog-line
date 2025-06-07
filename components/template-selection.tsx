@@ -32,7 +32,7 @@ export function TemplateSelection() {
               <span className="text-green-600">LINE活用</span>テンプレート
             </h2>
             <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              目的に合わせたテンプレートを選択するだけで、最適なLINEシステムを自動構築します
+              目的に合わせたテンプレートを選択するだけで、最適なLINEシステムを提供します
             </p>
           </div>
         </div>
