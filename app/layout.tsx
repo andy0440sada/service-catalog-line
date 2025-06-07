@@ -2,7 +2,7 @@ import type React from "react"
 import "@/app/globals.css"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
-// import { AuthProvider } from "@/lib/auth" // AuthProviderのインポートを削除
+import { AuthProvider } from "@/lib/auth"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -20,11 +20,11 @@ export default function RootLayout({
   return (
     <html lang="ja" suppressHydrationWarning>
       <body className={inter.className}>
-        {/* <AuthProvider> */} {/* AuthProviderのラップを削除 */}
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
-          {children}
-        </ThemeProvider>
-        {/* </AuthProvider> */} {/* AuthProviderのラップを削除 */}
+        <AuthProvider>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true} disableTransitionOnChange={true}>
+            {children}
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   )

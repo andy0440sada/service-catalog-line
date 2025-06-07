@@ -1,13 +1,15 @@
 "use client"
 
 import { useEffect, useState } from "react"
-// import { useAuth } from "@/lib/auth" // useAuth のインポートを削除
+import { useAuth } from "@/lib/auth"
+import { ProtectedRoute } from "@/components/auth/protected-route"
 import { getConstructedApps, clearConstructedApps } from "@/lib/constructed-apps"
 import type { ConstructedApp } from "@/types/app"
 import { AppCard } from "@/components/app-card"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-import { PlusCircle, RefreshCw } from "lucide-react"
+import { PlusCircle, RefreshCw, User, Mail, Calendar } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -21,21 +23,16 @@ import {
 const PRODUCTION_QR_URL =
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-zqepYHsGA9KB3E1GuartfeNLUGU5Bs.png"
 
-// 仮のユーザー情報と認証状態
-const MOCK_USER_ID = "mock-user-id-for-dashboard"
-const MOCK_IS_AUTHENTICATED = true // ダッシュボード表示のためにtrueに設定
-
-export default function DashboardPage() {
-  // const { user, isAuthenticated, loading: authLoading } = useAuth() // useAuth の使用を削除
+function DashboardContent() {
+  const { user } = useAuth()
   const [apps, setApps] = useState<ConstructedApp[]>([])
-  const [isLoading, setIsLoading] = useState(true) // 認証ローディングは不要になったため、通常のローディングのみ
+  const [isLoading, setIsLoading] = useState(true)
   const [isQrModalOpen, setIsQrModalOpen] = useState(false)
   const [selectedAppForQr, setSelectedAppForQr] = useState<ConstructedApp | null>(null)
 
   const fetchApps = () => {
-    if (MOCK_IS_AUTHENTICATED) {
-      // 仮の認証状態を使用
-      const userApps = getConstructedApps(MOCK_USER_ID) // 仮のユーザーIDを使用
+    if (user) {
+      const userApps = getConstructedApps(user.id)
       setApps(userApps.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()))
     } else {
       setApps([])
@@ -44,16 +41,16 @@ export default function DashboardPage() {
   }
 
   useEffect(() => {
-    // authLoading のチェックを削除
     fetchApps()
-  }, []) // 依存配列から user, isAuthenticated, authLoading を削除
+  }, [user])
 
   const handleDeleteApp = (appId: string) => {
-    // user のチェックを削除し、仮のユーザーIDを使用
-    const currentApps = getConstructedApps(MOCK_USER_ID)
-    const updatedApps = currentApps.filter((app) => app.id !== appId)
-    localStorage.setItem(`constructed_apps_${MOCK_USER_ID}`, JSON.stringify(updatedApps))
-    setApps(updatedApps.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()))
+    if (user) {
+      const currentApps = getConstructedApps(user.id)
+      const updatedApps = currentApps.filter((app) => app.id !== appId)
+      localStorage.setItem(`constructed_apps_${user.id}`, JSON.stringify(updatedApps))
+      setApps(updatedApps.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()))
+    }
   }
 
   const handleShowQrCode = (app: ConstructedApp) => {
@@ -62,13 +59,13 @@ export default function DashboardPage() {
   }
 
   const handleClearAllApps = () => {
-    // user のチェックを削除し、仮のユーザーIDを使用
-    clearConstructedApps(MOCK_USER_ID)
-    fetchApps()
+    if (user) {
+      clearConstructedApps(user.id)
+      fetchApps()
+    }
   }
 
   if (isLoading) {
-    // authLoading のチェックを削除
     return (
       <div className="container mx-auto px-4 py-12 md:py-16 text-center">
         <p className="text-lg text-gray-600">ダッシュボードを読み込み中...</p>
@@ -76,24 +73,58 @@ export default function DashboardPage() {
     )
   }
 
-  if (!MOCK_IS_AUTHENTICATED) {
-    // 仮の認証状態を使用
-    return (
-      <div className="container mx-auto px-4 py-12 md:py-16 text-center">
-        <h1 className="text-3xl font-bold mb-6">アクセスできません</h1>
-        <p className="text-lg text-gray-600 mb-8">ダッシュボードを表示するにはログインが必要です。</p>
-        <Button asChild>
-          <Link href="/login?redirect=/dashboard">ログインページへ</Link>
-        </Button>
-      </div>
-    )
-  }
-
   return (
     <>
-      <div className="container mx-auto px-4 py-12 md:py-16">
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-8">ダッシュボード</h1>
+        
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">ユーザー情報</CardTitle>
+              <User className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{user?.email}</div>
+              <p className="text-xs text-muted-foreground">
+                登録済みユーザー
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">メール認証</CardTitle>
+              <Mail className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {user?.email_confirmed_at ? "認証済み" : "未認証"}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                {user?.email_confirmed_at ? "メール認証が完了しています" : "メール認証を完了してください"}
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">登録日</CardTitle>
+              <Calendar className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {user?.created_at ? new Date(user.created_at).toLocaleDateString('ja-JP') : '-'}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                アカウント作成日
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-          <h1 className="text-3xl font-bold tracking-tight">構築済みアプリ一覧</h1>
+          <h2 className="text-2xl font-bold tracking-tight">構築済みアプリ一覧</h2>
           <div className="flex gap-2">
             <Button variant="outline" onClick={fetchApps}>
               <RefreshCw className="mr-2 h-4 w-4" />
@@ -183,5 +214,13 @@ export default function DashboardPage() {
         </Dialog>
       )}
     </>
+  )
+}
+
+export default function DashboardPage() {
+  return (
+    <ProtectedRoute>
+      <DashboardContent />
+    </ProtectedRoute>
   )
 }
