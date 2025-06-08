@@ -7,7 +7,7 @@ import { AuthProvider } from "@/lib/auth"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "GrowthPack for LINE - LINEを活用した顧客体験の最適化",
+  title: "業界特化サービスカタログ",
   description: "会員証LINEミニアプリで顧客接点を強化。紙のクーポンやDMに頼らない、効率的なマーケティングを実現します。",
   generator: "v0.dev",
 }
