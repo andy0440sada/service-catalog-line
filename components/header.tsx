@@ -27,7 +27,7 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/" className="font-bold text-xl">
-            Growth<span className="text-green-600">Pack</span>
+            業界特化<span className="text-green-600">カタログ</span>
           </Link>
         </div>
         <nav className="hidden md:flex items-center gap-6">
