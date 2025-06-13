@@ -10,7 +10,7 @@ export function ComparisonSection() {
               他ツールとの違い
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              <span className="text-green-600">GrowthPack for LINE</span>の強み
+              <span className="text-green-600">業界特化サービスカタログ</span>の強み
             </h2>
             <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               他のLINE関連ツールと比較した際の優位性をご紹介します
@@ -28,10 +28,8 @@ export function ComparisonSection() {
                   <div className="text-xs font-normal">月額課金型</div>
                 </th>
                 <th className="p-4 text-center bg-green-600 text-white border">
-                  <div className="text-lg font-bold">
-                    Growth<span className="font-normal">Pack</span>
-                  </div>
-                  <div className="text-xs font-normal">テンプレート + AI自動構築</div>
+                  <div className="text-lg font-bold">業界特化サービスカタログ</div>
+                  <div className="text-xs font-normal">テンプレートで自動構築</div>
                 </th>
                 <th className="p-4 text-center bg-gray-700 text-white border rounded-tr-lg">
                   <div className="text-lg font-bold">フルスクラッチ開発</div>
