@@ -1,9 +1,29 @@
+"use client"
+
+import { Button } from "@/components/ui/button"
+
 import Image from "next/image"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent } from "@/components/ui/card"
 import { ArrowUp, Users, ShoppingCart, Clock } from "lucide-react"
+import { useState } from "react"
+import { SystemGenerationScreen } from "./system-generation-screen"
+// Button is already used in other files, assuming it's imported from "@/components/ui/button"
+// If not, ensure: import { Button } from "@/components/ui/button";
 
 export function CaseStudiesSection() {
+  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null)
+  const [isGenerating, setIsGenerating] = useState(false)
+
+  const handleCaseStudyTemplateSelect = (templateId: string) => {
+    setSelectedTemplate(templateId)
+    setIsGenerating(true)
+  }
+
+  if (isGenerating && selectedTemplate) {
+    return <SystemGenerationScreen templateId={selectedTemplate} />
+  }
+
   return (
     <section id="case-studies" className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
       <div className="container px-4 md:px-6">
@@ -201,6 +221,16 @@ export function CaseStudiesSection() {
                     className="rounded-lg border border-gray-200"
                   />
                 </div>
+              </div>
+
+              <div className="mt-12 text-center">
+                <Button
+                  size="lg"
+                  className="bg-green-600 hover:bg-green-700"
+                  onClick={() => handleCaseStudyTemplateSelect("miniapp")}
+                >
+                  この事例と同じ会員証LINEミニアプリを作る
+                </Button>
               </div>
             </TabsContent>
 
