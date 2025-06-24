@@ -19,7 +19,7 @@ export function HeroSection() {
                 <span className="text-green-600">顧客体験の最適化</span>
               </h1>
               <p className="max-w-[600px] text-gray-500 md:text-xl">
-                会員証LINEミニアプリで顧客接点を強化。
+                会員証LINEミニアプリや1to1コミュニケーションで顧客接点を強化。
                 <br />
                 紙のクーポンやDMに頼らない、効率的なマーケティングを実現。
               </p>
@@ -49,7 +49,6 @@ export function HeroSection() {
                 alt="スマートフォンでデジタル会員証とクーポンを操作する店員と、紙媒体からの移行を示すイメージ"
                 className="object-cover"
               />
-              
             </div>
           </div>
         </div>
