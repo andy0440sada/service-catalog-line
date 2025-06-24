@@ -55,11 +55,11 @@ export function CaseStudiesSection() {
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
                         <Image
-                          src="/placeholder.svg?height=80&width=80"
+                          src="/images/logos/pal-closet-logo.png"
                           width={80}
                           height={80}
                           alt="PAL CLOSET様"
-                          className="rounded-full"
+                          className="rounded-full object-contain"
                         />
                         <div>
                           <h3 className="text-xl font-bold">PAL CLOSET様</h3>
@@ -104,15 +104,15 @@ export function CaseStudiesSection() {
                           EC会員数
                         </h4>
                         <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <span className="text-gray-600">2020年3月単月、新規会員数が</span>
-                            <span className="text-2xl font-bold text-red-600">前月比200%増加</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-gray-600">3COINSに限ると、新規会員の</span>
-                            <span className="text-2xl font-bold text-red-600">8割</span>
-                            <span className="text-gray-600">がLINEミニアプリ経由</span>
-                          </div>
+                          <p className="text-gray-600">
+                            2020年3月単月、新規会員数が
+                            <span className="text-2xl font-bold text-red-600 ml-1">前月比200%増加</span>
+                          </p>
+                          <p className="text-gray-600">
+                            3COINSに限ると、新規会員の
+                            <span className="text-2xl font-bold text-red-600 mx-1">8割</span>
+                            がLINEミニアプリ経由
+                          </p>
                         </div>
                       </CardContent>
                     </Card>
@@ -124,10 +124,10 @@ export function CaseStudiesSection() {
                           登録時間
                         </h4>
                         <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <span className="text-gray-600">店舗でのQRコード読み込みから会員化までの時間が</span>
-                            <span className="text-2xl font-bold text-red-600">たったの5秒に</span>
-                          </div>
+                          <p className="text-gray-600">
+                            店舗でのQRコード読み込みから会員化までの時間が
+                            <span className="text-2xl font-bold text-red-600 ml-1">たったの5秒に</span>
+                          </p>
                         </div>
                       </CardContent>
                     </Card>
@@ -139,15 +139,15 @@ export function CaseStudiesSection() {
                           友だち数
                         </h4>
                         <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <span className="text-gray-600">PAL CLOSETのLINE公式アカウント友達数が、1ヶ月で</span>
-                            <span className="text-2xl font-bold text-red-600">10万人増（3倍）</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-gray-600">2021年4月時点で</span>
-                            <span className="text-2xl font-bold text-red-600">53.6万人</span>
-                            <span className="text-gray-600">に増加</span>
-                          </div>
+                          <p className="text-gray-600">
+                            PAL CLOSETのLINE公式アカウント友達数が、1ヶ月で
+                            <span className="text-2xl font-bold text-red-600 ml-1">10万人増（3倍）</span>
+                          </p>
+                          <p className="text-gray-600">
+                            2021年4月時点で
+                            <span className="text-2xl font-bold text-red-600 mx-1">53.6万人</span>
+                            に増加
+                          </p>
                         </div>
                       </CardContent>
                     </Card>
@@ -159,17 +159,15 @@ export function CaseStudiesSection() {
                           EC売上
                         </h4>
                         <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <span className="text-gray-600">2020年4-5月は新型コロナの影響で店舗休業</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-gray-600">2ヶ月間のEC売上は前年同期比で</span>
-                            <span className="text-2xl font-bold text-red-600">2倍以上の成長</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-gray-600">LINEミニアプリ導入後、LINE経由のEC売上が</span>
-                            <span className="text-2xl font-bold text-red-600">前年比5倍に成長</span>
-                          </div>
+                          <p className="text-gray-600">2020年4-5月は新型コロナの影響で店舗休業</p>
+                          <p className="text-gray-600">
+                            2ヶ月間のEC売上は前年同期比で
+                            <span className="text-2xl font-bold text-red-600 ml-1">2倍以上の成長</span>
+                          </p>
+                          <p className="text-gray-600">
+                            LINEミニアプリ導入後、LINE経由のEC売上が
+                            <span className="text-2xl font-bold text-red-600 ml-1">前年比5倍に成長</span>
+                          </p>
                         </div>
                       </CardContent>
                     </Card>
