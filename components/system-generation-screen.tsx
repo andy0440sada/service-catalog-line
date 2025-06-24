@@ -207,15 +207,15 @@ export function SystemGenerationScreen({ templateId, isGuest = false }: SystemGe
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
             <div className="inline-block rounded-lg bg-green-100 px-3 py-1 text-sm text-green-700">
-              システム自動生成
+              システム準備中
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               <span className="text-green-600">{displayName}</span>を
               <br />
-              自動構築しています
+              アプリを準備しています
             </h2>
             <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              AIが選択されたテンプレートに最適なシステムを構築しています。
+              選択されたテンプレートに最適なアプリを準備しています。
               {isGuest && " これは30分間限定のサンドボックス環境です。"}
             </p>
           </div>
@@ -225,12 +225,12 @@ export function SystemGenerationScreen({ templateId, isGuest = false }: SystemGe
           <Card className="border-2 border-green-100">
             <CardHeader>
               <CardTitle className="text-center">
-                {isGenerated ? "システム生成完了！" : "システムを自動生成中..."}
+                {isGenerated ? "アプリ準備完了！" : "アプリを準備中..."}
               </CardTitle>
               <CardDescription className="text-center">
                 {isGenerated
-                  ? `選択されたテンプレート「${displayName}」の${isGuest ? "サンドボックス環境" : "システム"}が生成されました。`
-                  : "AIが最適なシステムを構築しています。完了まで約10秒かかります。"}
+                  ? `選択されたテンプレート「${templateName}」の${isGuest ? "サンドボックス環境" : "システム"}が準備できました。`
+                  : "最適なシステムを準備しています。完了まで約10秒かかります。"}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
