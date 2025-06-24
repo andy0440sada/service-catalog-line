@@ -86,9 +86,12 @@ export function TemplateSelection() {
                   ユーザー属性や行動履歴に基づいて、最適なコンテンツやメニューを表示。パーソナライズされた体験を提供します。
                 </p>
                 <div className="w-full max-w-[300px] h-[150px] relative rounded-lg overflow-hidden border border-gray-200 shadow-sm">
-                  <div className="absolute inset-0 bg-gray-50 flex items-center justify-center text-gray-400">
-                    ユーザーセグメント出しわけイメージ
-                  </div>
+                  <Image
+                    src="/images/personalized-content.png"
+                    alt="ユーザーセグメント別コンテンツ表示のイメージ"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
 
                 <div className="w-full border-t pt-4">
@@ -146,9 +149,12 @@ export function TemplateSelection() {
                   顧客一人ひとりとのパーソナルなコミュニケーションを実現。チャットボットと有人対応を組み合わせた効率的な顧客対応が可能です。
                 </p>
                 <div className="w-full max-w-[300px] h-[150px] relative rounded-lg overflow-hidden border border-gray-200 shadow-sm">
-                  <div className="absolute inset-0 bg-gray-50 flex items-center justify-center text-gray-400">
-                    1to1コミュニケーションイメージ
-                  </div>
+                  <Image
+                    src="/images/1to1-communication.png"
+                    alt="1対1コミュニケーションとチャットボットのイメージ"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
 
                 <div className="w-full border-t pt-4">
@@ -206,9 +212,12 @@ export function TemplateSelection() {
                   既存のSaaSツールと共存できる柔軟な連携機能。段階的な導入や複数ツールの併用が可能になります。
                 </p>
                 <div className="w-full max-w-[300px] h-[150px] relative rounded-lg overflow-hidden border border-gray-200 shadow-sm">
-                  <div className="absolute inset-0 bg-gray-50 flex items-center justify-center text-gray-400">
-                    SaaS連携イメージ
-                  </div>
+                  <Image
+                    src="/images/saas-integration.png"
+                    alt="SaaSツール連携・共存のイメージ"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
 
                 <div className="w-full border-t pt-4">

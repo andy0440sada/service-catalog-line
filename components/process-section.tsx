@@ -78,7 +78,7 @@ export function ProcessSection() {
                 </div>
               </div>
               <h3 className="text-xl font-bold">AIが自動構築</h3>
-              <p className="text-gray-500">AIがAWSリソースを自動構成。データベース、API、UIを生成</p>
+              <p className="text-gray-500">AIがAWSリソースを自動構成。データベース���API、UIを生成</p>
               <div className="w-full max-w-[200px] h-[120px] relative rounded-lg overflow-hidden border border-gray-200 shadow-sm">
                 <div className="absolute inset-0 bg-white p-4 flex flex-col items-center justify-center">
                   <Server className="h-8 w-8 text-blue-600 mb-2" />

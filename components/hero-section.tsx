@@ -46,12 +46,10 @@ export function HeroSection() {
                 src="/images/hero-image.png"
                 width={600}
                 height={400}
-                alt="LINEミニアプリでポイントを獲得する女性"
+                alt="スマートフォンでデジタル会員証とクーポンを操作する店員と、紙媒体からの移行を示すイメージ"
                 className="object-cover"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
-                <p className="font-medium">QRコードを読み込むだけで、5秒で会員証発行・ポイント付与</p>
-              </div>
+              
             </div>
           </div>
         </div>

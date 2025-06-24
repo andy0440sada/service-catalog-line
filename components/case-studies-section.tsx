@@ -229,7 +229,7 @@ export function CaseStudiesSection() {
                   className="bg-green-600 hover:bg-green-700"
                   onClick={() => handleCaseStudyTemplateSelect("miniapp")}
                 >
-                  この事例と同じ会員証LINEミニアプリを作る
+                  この事例と同じ会員証LINEミニアプリを利用する
                 </Button>
               </div>
             </TabsContent>
